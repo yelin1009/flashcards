@@ -3,20 +3,20 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import { readCard, updateCard } from "../../utils/api/index";
 
 function EditCard() {
-  const { cardId } = useParams();
+  //set up hooks
+  const { deckId, cardId } = useParams();
   const history = useHistory();
-  const [card, setCard] = useState({});
+  const [card, setCard] = useState({ front: "", back: "" });
 
   //load cards from API to determine new card ID
   useEffect(() => {
-    async function loadCard() {
-      //get cards from API
-      const loadedCard = await readCard(cardId);
-      //set card id at + 1 length of current card array
-      setCard(loadedCard);
+    async function loadCards() {
+      const cardData = await readCard(cardId);
+      setCard(cardData);
     }
-    loadCard();
-  }, [cardId]);
+
+    loadCards();
+  }, [deckId, cardId]);
 
   //update the state as card info changes
   function changeFront(e) {
@@ -38,6 +38,7 @@ function EditCard() {
           <li key="0" className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
+
           <li className="breadcrumb-item active" key="2" aria-current="page">
             Edit Card
           </li>

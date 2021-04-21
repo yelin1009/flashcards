@@ -7,11 +7,11 @@ function Cards() {
   return (
     <div>
       <Switch>
-        <Route path="/decks/:deckID/cards/:cardId/edit">
-          <EditCard />
-        </Route>
         <Route path="/decks/:deckId/cards/new">
           <AddCards />
+        </Route>
+        <Route path="/decks/:deckID/cards/:cardId/edit">
+          <EditCard />
         </Route>
       </Switch>
     </div>
