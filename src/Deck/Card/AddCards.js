@@ -43,12 +43,14 @@ function AddCards() {
       <nav arial-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <Link to="/">Home</Link>
+            <Link key="0" to="/">
+              Home
+            </Link>
           </li>
-          <li className="breadcrumb-item">
+          <li key="1" className="breadcrumb-item">
             <Link to={`/decks/${deckId}`}>{deck.name}</Link>
           </li>
-          <li className="breadcrumb-item active" aria-current="page" s>
+          <li key="2" className="breadcrumb-item active" aria-current="page" s>
             Add Card
           </li>
         </ol>
@@ -56,7 +58,7 @@ function AddCards() {
       <h2>{deck.name}: Add Card</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label for="deckName">Front</label>
+          <label>Front</label>
           <textarea
             className="form-control"
             id="cardName"
@@ -67,7 +69,7 @@ function AddCards() {
           />
         </div>
         <div className="form-group">
-          <label for="description">Back</label>
+          <label>Back</label>
           <textarea
             className="form-control"
             id="cardDescription"

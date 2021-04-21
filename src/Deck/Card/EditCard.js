@@ -58,7 +58,7 @@ function EditCard() {
       <h2>Edit Card</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label for="deckName">Front</label>
+          <label>Front</label>
           <textarea
             className="form-control"
             id="cardName"
@@ -69,7 +69,7 @@ function EditCard() {
           />
         </div>
         <div className="form-group">
-          <label for="description">Back</label>
+          <label>Back</label>
           <textarea
             className="form-control"
             id="cardDescription"

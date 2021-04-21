@@ -36,10 +36,10 @@ function Deck() {
     <section className="container">
       <nav arial-label="breadcrumb">
         <ol className="breadcrumb">
-          <li className="breadcrumb-item">
+          <li key="0" className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li className="breadcrumb-item active" aria-current="page" s>
+          <li key="1" className="breadcrumb-item active" aria-current="page" s>
             Deck
           </li>
         </ol>
