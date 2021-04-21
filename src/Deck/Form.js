@@ -29,9 +29,7 @@ function Form({ handleSubmit, deck = {}, changeName, changeDesc }) {
       <Link className="btn btn-secondary" to="/">
         Cancel
       </Link>
-      <button type="submit" className="btn btn-primary" to="/">
-        Submit
-      </button>
+      <button className="btn btn-primary">Submit</button>
     </form>
   );
 }

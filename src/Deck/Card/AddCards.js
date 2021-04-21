@@ -50,7 +50,7 @@ function AddCards() {
           <li key="1" className="breadcrumb-item">
             <Link to={`/decks/${deckId}`}>{deck.name}</Link>
           </li>
-          <li key="2" className="breadcrumb-item active" aria-current="page" s>
+          <li key="2" className="breadcrumb-item active" aria-current="page">
             Add Card
           </li>
         </ol>
@@ -79,7 +79,7 @@ function AddCards() {
             value={card.back}
           />
         </div>
-        <Link to="/" className="btn btn-secondary">
+        <Link to={`/decks/${deckId}`} className="btn btn-secondary">
           Done
         </Link>
         <button type="submit" className="btn btn-primary" to="/">

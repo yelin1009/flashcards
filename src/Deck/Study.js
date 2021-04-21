@@ -61,12 +61,7 @@ function Study() {
             <li key="1" className="breadcrumb-item">
               <Link to="/">{deck.name}</Link>
             </li>
-            <li
-              key="2"
-              className="breadcrumb-item active"
-              aria-current="page"
-              s
-            >
+            <li key="2" className="breadcrumb-item active" aria-current="page">
               Study
             </li>
           </ol>

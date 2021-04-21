@@ -56,7 +56,7 @@ function DeckList() {
         </div>
         <br></br>
         {decks.map((deck) => (
-          <div className="card w-100">
+          <div key={deck.id} className="card w-100">
             <div className="container mt-0">
               <div className="row card-header">
                 <div className="col-10 ">

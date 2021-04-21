@@ -39,12 +39,12 @@ function Deck() {
           <li key="0" className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li key="1" className="breadcrumb-item active" aria-current="page" s>
+          <li key="1" className="breadcrumb-item active" aria-current="page">
             Deck
           </li>
         </ol>
       </nav>
-      <div className="card w-100">
+      <div key={deck.id} className="card w-100">
         <div className="container mt-0">
           <div className="row card-header">
             <div className="col-10 ">
@@ -91,12 +91,12 @@ function Deck() {
       </div>
       <h2>Cards</h2>
       {deck.cards.map((card) => (
-        <div className="card w-100">
+        <div key={card.id} className="card w-100">
           <div className="container mt-0">
             <div className="row">
               <div className="card-text w-40">{card.front}</div>
               <hr />
-              <div classname="card-text w-40">{card.back}</div>
+              <div className="card-text w-40">{card.back}</div>
             </div>
             <Link
               to={`/decks/${deck.id}/cards/${card.id}/edit`}

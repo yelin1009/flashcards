@@ -40,7 +40,7 @@ function EditDeck() {
           <li key="1" className="breadcrumb-item">
             <Link to={`/decks/${deckId}`}>{deck.name}</Link>
           </li>
-          <li key="2" className="breadcrumb-item active" aria-current="page" s>
+          <li key="2" className="breadcrumb-item active" aria-current="page">
             Edit Deck
           </li>
         </ol>

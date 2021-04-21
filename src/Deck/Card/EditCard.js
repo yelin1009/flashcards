@@ -1,43 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
-import { readCard, updateCard, readDeck } from "../../utils/api/index";
+import { readCard, updateCard } from "../../utils/api/index";
 
 function EditCard() {
-  const { deckId, cardId } = useParams();
+  const { cardId } = useParams();
   const history = useHistory();
-  const [deck, setDeck] = useState({});
   const [card, setCard] = useState({});
 
+  //load cards from API to determine new card ID
   useEffect(() => {
-    async function loadData() {
-      try {
-        const dataFromAPI = await readDeck(deckId);
-        setDeck(dataFromAPI);
-        const datafromApi2 = await readCard(cardId);
-        setCard(datafromApi2);
-      } catch (error) {
-        if (error.name === "AbortError") {
-          // Ignore `AbortError`
-          console.log("Aborted");
-        } else {
-          throw error;
-        }
-      }
+    async function loadCard() {
+      //get cards from API
+      const loadedCard = await readCard(cardId);
+      //set card id at + 1 length of current card array
+      setCard(loadedCard);
     }
-    loadData();
-  }, [deckId, cardId]);
+    loadCard();
+  }, [cardId]);
 
+  //update the state as card info changes
   function changeFront(e) {
     setCard({ ...card, front: e.target.value });
   }
-
   function changeBack(e) {
     setCard({ ...card, back: e.target.value });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateCard(card).then((output) => history.push(`/decks/${output.deckId}`));
+    updateCard(card).then((output) => history.push(`/decks/${output.id}`));
   }
 
   return (
@@ -47,10 +38,7 @@ function EditCard() {
           <li key="0" className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li key="1" className="breadcrumb-item">
-            <Link to={`/decks/${deckId}`}>{deck.name}</Link>
-          </li>
-          <li className="breadcrumb-item active" key="2" aria-current="page" s>
+          <li className="breadcrumb-item active" key="2" aria-current="page">
             Edit Card
           </li>
         </ol>

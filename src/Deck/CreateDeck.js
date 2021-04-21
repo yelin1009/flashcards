@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { createDeck } from "../utils/api/index";
 import Form from "./Form";
 
 function CreateDeck() {
-  const [deck, setDeck] = useState({ name: "", description: "" });
+  const [deck, setDeck] = useState({ id: 0, name: "", description: "" });
+  const history = useHistory();
 
   function handleSubmit(event) {
     event.preventDefault();
-    createDeck(deck);
+    createDeck(deck).then((output) => history.push(`/decks/${output.id}`));
   }
 
   function changeName(e) {
@@ -26,7 +27,7 @@ function CreateDeck() {
           <li key="0" className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li key="1" className="breadcrumb-item active" aria-current="page" s>
+          <li key="1" className="breadcrumb-item active" aria-current="page">
             Create Deck
           </li>
         </ol>
