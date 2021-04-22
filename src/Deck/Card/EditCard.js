@@ -1,21 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
-import { readCard, updateCard } from "../../utils/api/index";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { readDeck, readCard, updateCard } from "../../utils/api/index";
 
 function EditCard() {
-  //set up hooks
-  const { deckId, cardId } = useParams();
+  const params = useParams();
+  const deckId = params.deckId;
+  const cardId = params.cardId;
+  const [deck, setDeck] = useState({});
+  const [card, setCard] = useState({});
   const history = useHistory();
-  const [card, setCard] = useState({ front: "", back: "" });
 
-  //load cards from API to determine new card ID
   useEffect(() => {
-    async function loadCards() {
-      const cardData = await readCard(cardId);
-      setCard(cardData);
+    setDeck({});
+    async function loadData() {
+      try {
+        const dataFromAPI = await readDeck(deckId);
+        setDeck(dataFromAPI);
+        const datafromApie2 = await readCard(cardId);
+        setCard(datafromApie2);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          // Ignore `AbortError`
+          console.log("Aborted");
+        } else {
+          throw error;
+        }
+      }
     }
-
-    loadCards();
+    loadData();
   }, [deckId, cardId]);
 
   //update the state as card info changes
@@ -38,7 +50,9 @@ function EditCard() {
           <li key="0" className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-
+          <li key="1" className="breadcrumb-item">
+            <Link to={`/decks/${deckId}`}>{deck.name}</Link>
+          </li>
           <li className="breadcrumb-item active" key="2" aria-current="page">
             Edit Card
           </li>
