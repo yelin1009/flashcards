@@ -5,7 +5,8 @@ import { useParams } from "react-router";
 
 function EditCard() {
   //set up hooks
-  const { deckId, cardId } = useParams();
+  const { deckId } = useParams();
+  const { cardId } = useParams();
   const [deck, setDeck] = useState({ name: "", description: "" });
   const history = useHistory();
   const [card, setCard] = useState({
@@ -15,11 +16,15 @@ function EditCard() {
 
   //load cards from API to determine new card ID
   useEffect(() => {
+    console.log(deckId);
     async function loadDeck() {
       //get name from current deck
       const deck = await readDeck(deckId);
       setDeck(deck);
     }
+
+    console.log(cardId);
+
     loadCard();
     loadDeck();
     async function loadCard() {

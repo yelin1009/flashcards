@@ -7,7 +7,7 @@ function Cards() {
   return (
     <div>
       <Switch>
-        <Route path="/decks/:deckID/cards/:cardId/edit">
+        <Route path="/decks/:deckId/cards/:cardId/edit">
           <EditCard />
         </Route>
         <Route path="/decks/:deckId/cards/new">
