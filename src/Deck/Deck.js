@@ -1,23 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { readDeck, deleteDeck, deleteCard } from "../utils/api/index";
-import { useParams, useHistory, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { deleteCard, deleteDeck, readDeck } from "../utils/api";
 
-function Deck() {
-  const [deck, setDeck] = useState({ id: 0, name: "", cards: [] });
-  const params = useParams();
-  const deckId = params.deckId;
+export function Deck() {
+  const { deckId } = useParams();
   const history = useHistory();
+  const [deck, setDeck] = useState({
+    id: 0,
+    name: "",
+    cards: [],
+  });
 
   //useEffect to fetch card data
   useEffect(() => {
-    async function loadData() {
-      const dataFromAPI = await readDeck(deckId);
-      setDeck(dataFromAPI);
+    async function loadDecks() {
+      const loadedDeck = await readDeck(deckId);
+      setDeck(loadedDeck);
     }
-    loadData();
+    loadDecks();
   }, [deckId]);
 
-  //DeleteHandler for Deck
+  //if Deck isn't loaded yet, display loading message.
+  if (!deck) {
+    return <p>Loading...</p>;
+  }
+
+  //handle card delete
+  function deleteCardHandler(cardId) {
+    if (window.confirm("Delete Card? This can not be undone.")) {
+      deleteCard(cardId).then((output) => history.go(0));
+    }
+  }
+
+  //handle deck delete
   function deleteDeckHandler(deckId) {
     if (window.confirm("Delete this deck? This can not be undone.")) {
       deleteDeck(deckId);
@@ -25,96 +40,73 @@ function Deck() {
     }
   }
 
-  //DeleteHandler for Cards
-  function deleteCardHandler(cardId) {
-    if (window.confirm("Delete Card? This can not be undone.")) {
-      deleteCard(cardId).then((output) => history.go(0));
-    }
-  }
+  const cardList = deck.cards.map((card) => (
+    <div className="card w-100" key={card.id}>
+      <div className="card-body">
+        <h5 className="card-title">{card.name}</h5>
+        <h6 className="text-muted">Front</h6>
+        <p className="card-text w-40">{card.front}</p>
+        <hr />
+        <h6 className="text-muted">Back</h6>
+        <p className="card-text w-40">{card.back}</p>
+        <div className="d-flex flex-row-reverse">
+          <button
+            className="btn btn-danger ml-2"
+            onClick={() => deleteCardHandler(card.id)}
+          >
+            Delete
+          </button>
+          <Link
+            className="btn btn-secondary ml-2"
+            to={`/decks/${deckId}/cards/${card.id}/edit`}
+          >
+            Edit
+          </Link>
+        </div>
+      </div>
+    </div>
+  ));
 
   return (
-    <section className="container">
-      <nav arial-label="breadcrumb">
+    <div>
+      <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
-          <li key="0" className="breadcrumb-item">
+          <li className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li key="1" className="breadcrumb-item active" aria-current="page">
-            Deck
+          <li className="breadcrumb-item active" aria-current="page">
+            {deck.name}
           </li>
         </ol>
       </nav>
-      <div key={deck.id} className="card w-100">
-        <div className="container mt-0">
-          <div className="row card-header">
-            <div className="col-10 ">
-              <h4 className="card-title">{deck.name}</h4>
-            </div>
-          </div>
-          <div className="card-body mt-0">
-            <p>{deck.description}</p>
-          </div>
-          <div className="container mt-0">
-            <div className="row justify-content-between">
-              <div className="col-8">
-                <Link
-                  to={`/decks/${deck.id}/edit`}
-                  className="btn btn-secondary m-2"
-                >
-                  Edit
-                </Link>
-                <Link
-                  to={`/decks/${deck.id}/study`}
-                  className="btn btn-primary m-2"
-                >
-                  Study
-                </Link>
-                <Link
-                  to={`/decks/${deck.id}/cards/new`}
-                  className="btn btn-primary m-2"
-                >
-                  Add Cards
-                </Link>
-              </div>
-              <div className="col-2">
-                <button
-                  className="btn btn-danger"
-                  onClick={deleteDeckHandler}
-                  value={deck.id}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
+      <h4>{deck.name}</h4>
+      <p>{deck.description}</p>
+      <div className="row mb-5">
+        <div className="d-flex flex-row col-8">
+          <Link className="btn btn-secondary m-2" to={`/decks/${deck.id}/edit`}>
+            Edit Deck
+          </Link>
+          <Link className="btn btn-primary m-2" to={`/decks/${deck.id}/study`}>
+            Study
+          </Link>
+          <Link
+            className="btn btn-primary m-2"
+            to={`/decks/${deck.id}/cards/new`}
+          >
+            Add Cards
+          </Link>
+        </div>
+        <div className="d-flex flex-row-reverse col-4">
+          <button
+            className="btn btn-danger m-2"
+            onClick={() => deleteDeckHandler(deck.id)}
+          >
+            Delete Deck
+          </button>
         </div>
       </div>
-      <h2>Cards</h2>
-      {deck.cards.map((card) => (
-        <div key={card.id} className="card w-100">
-          <div className="container mt-0">
-            <div className="row">
-              <div className="card-text w-40">{card.front}</div>
-              <hr />
-              <div className="card-text w-40">{card.back}</div>
-            </div>
-            <Link
-              to={`/decks/${deck.id}/cards/${card.id}/edit`}
-              className="btn btn-secondary m-2"
-            >
-              Edit
-            </Link>
-            <button
-              className="btn btn-danger m-2"
-              value={card.id}
-              onClick={deleteCardHandler}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      ))}
-    </section>
+      <div className="card-list">{cardList}</div>
+    </div>
   );
 }
 

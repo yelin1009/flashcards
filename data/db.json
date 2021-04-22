@@ -12,19 +12,9 @@
       "id": 2
     },
     {
-      "id": 3,
-      "name": "ABC",
-      "description": "ABC"
-    },
-    {
       "name": "aaa",
       "description": "aaa",
       "id": 4
-    },
-    {
-      "name": "Niko Babo",
-      "description": "baboya",
-      "id": 5
     },
     {
       "name": "Test",
@@ -42,19 +32,19 @@
       "id": 8
     },
     {
-      "name": "",
-      "description": "",
-      "id": 9
-    },
-    {
       "id": 10,
       "name": "jj",
       "description": "jj"
     },
     {
       "id": 11,
-      "name": "jj",
-      "description": "j"
+      "name": "New Deck",
+      "description": "test"
+    },
+    {
+      "id": 12,
+      "name": "Test 1",
+      "description": "Test 2"
     }
   ],
   "cards": [
@@ -110,12 +100,6 @@
       "id": 9
     },
     {
-      "front": "jkjkj",
-      "back": "kjkjkjkj",
-      "deckId": 3,
-      "id": 10
-    },
-    {
       "front": "THis is a test",
       "back": "test",
       "deckId": 7,
@@ -138,6 +122,72 @@
       "back": "dasfadsf",
       "deckId": 7,
       "id": 14
+    },
+    {
+      "front": "adsfsd",
+      "back": "asdfsadf",
+      "deckId": 1,
+      "id": 15
+    },
+    {
+      "front": "kkk",
+      "back": "kk",
+      "deckId": null,
+      "id": 16
+    },
+    {
+      "front": "asdf",
+      "back": "adfds",
+      "deckId": null,
+      "id": 17
+    },
+    {
+      "front": "asdfsadf",
+      "back": "adsfsadf",
+      "deckId": null,
+      "id": 18
+    },
+    {
+      "front": "adsfadsfs",
+      "back": "adsfadsfa",
+      "deckId": null,
+      "id": 19
+    },
+    {
+      "front": "adf",
+      "back": "adfdsf",
+      "deckId": null,
+      "id": 20
+    },
+    {
+      "front": "adsf",
+      "back": "adsfd",
+      "deckId": null,
+      "id": 21
+    },
+    {
+      "front": "adsfasdf",
+      "back": "asdfadsf",
+      "deckId": null,
+      "id": 22
+    },
+    {
+      "front": "New card1",
+      "back": "new card2",
+      "deckId": null,
+      "id": 23
+    },
+    {
+      "front": "jjj",
+      "back": "jjj",
+      "deckId": null,
+      "id": 24
+    },
+    {
+      "front": "adf",
+      "back": "adf",
+      "deckId": 1,
+      "id": 25
     }
   ]
 }

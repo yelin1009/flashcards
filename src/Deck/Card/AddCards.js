@@ -1,27 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router";
+import { Link, useHistory } from "react-router-dom";
 import { createCard, readDeck } from "../../utils/api/index";
 
 function AddCards() {
-  const [deck, setDeck] = useState({ name: "", description: "" });
+  //set up hooks
   const { deckId } = useParams();
+  //create initial form state
   const initializeForm = {
     front: "",
     back: "",
     deckId,
   };
   const [card, setCard] = useState({ ...initializeForm });
+  const [deck, setDeck] = useState({});
+  const history = useHistory();
 
+  //load cards from API to determine new card ID
   useEffect(() => {
-    async function loadData() {
-      const dataFromAPI = await readDeck(deckId);
-      setDeck(dataFromAPI);
+    async function loadDeck() {
+      //get name from current deck
+      const loadedDeck = await readDeck(deckId);
+      setDeck(loadedDeck);
     }
-
-    loadData();
+    loadDeck();
   }, [deckId]);
 
-  function handleSubmit(e) {
+  //update the state as card info changes
+  function changeFront(e) {
+    setCard({ ...card, front: e.target.value });
+  }
+  function changeBack(e) {
+    setCard({ ...card, back: e.target.value });
+  }
+
+  function submitHandler(e) {
     e.preventDefault();
     async function updateData() {
       await createCard(deckId, card);
@@ -29,15 +42,6 @@ function AddCards() {
     }
     updateData();
   }
-
-  function changeFront(e) {
-    setCard({ ...card, front: e.target.value });
-  }
-
-  function changeBack(e) {
-    setCard({ ...card, back: e.target.value });
-  }
-
   return (
     <section className="container">
       <nav arial-label="breadcrumb">
@@ -56,7 +60,7 @@ function AddCards() {
         </ol>
       </nav>
       <h2>{deck.name}: Add Card</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submitHandler}>
         <div className="form-group">
           <label>Front</label>
           <textarea
@@ -79,10 +83,14 @@ function AddCards() {
             value={card.back}
           />
         </div>
-        <Link to={`/decks/${deckId}`} className="btn btn-secondary">
+        <button
+          type="button"
+          onClick={() => history.go(-1)}
+          className="btn btn-secondary"
+        >
           Done
-        </Link>
-        <button type="submit" className="btn btn-primary" to="/">
+        </button>
+        <button type="submit" className="btn btn-primary">
           Save
         </button>
       </form>

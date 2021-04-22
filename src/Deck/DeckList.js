@@ -30,17 +30,9 @@ function DeckList() {
     );
     if (result) {
       async function deleteData() {
-        try {
-          await deleteDeck(value);
-          const output = await listDecks();
-          setDecks(output);
-        } catch (error) {
-          if (error.name === "AbortError") {
-            console.log("Aborted");
-          } else {
-            throw error;
-          }
-        }
+        await deleteDeck(value);
+        const output = await listDecks();
+        setDecks(output);
       }
       deleteData();
     }
